@@ -27,7 +27,7 @@ const FinalizarCompra = ({ prendasEnCarrito }) => {
         <tbody>
           <tr>
             <th>Subtotal</th>
-            <td>{subtotal}</td>
+            <td>${subtotal}</td>
           </tr>
           <tr>
             <th>Envío</th>

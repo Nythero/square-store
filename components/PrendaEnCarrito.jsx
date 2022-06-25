@@ -25,13 +25,13 @@ const PrendaEnCarrito = ({ prenda }) => {
         <div className='col-6 font-weight-bold'>{prenda.nombre}</div>
       </td>
       <td className='align-middle'>
-        {prenda.precio}
+        ${prenda.precio}
       </td>
       <td className='align-middle'>
         <input onChange={handleChange} min='0' type='number' value={prenda.cantidad} />
       </td>
       <td className='align-middle'>
-        {prenda.precio * prenda.cantidad}
+        ${prenda.precio * prenda.cantidad}
       </td>
     </tr>
   )

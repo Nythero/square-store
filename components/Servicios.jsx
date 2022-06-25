@@ -18,7 +18,7 @@ const transferenciaBancaria = {
 
 const Servicios = () => {
   return (
-    <section className='servicios d-flex justify-content-around'>
+    <section className='servicios d-flex justify-content-around bg-dark mb-3'>
       <Servicio {...envioGratis} />
       <Servicio {...cuotasSinInteres}/>
       <Servicio {...transferenciaBancaria}/>

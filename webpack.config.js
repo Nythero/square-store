@@ -18,7 +18,7 @@ module.exports = {
         }
       },
       {
-	test: /client.js/,
+        test: /client.js/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {

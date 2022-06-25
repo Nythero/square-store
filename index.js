@@ -1,5 +1,5 @@
 require('babel-register')({
-	presets: ['react']
+  presets: ['react']
 })
 const express = require('express')
 const app = express()

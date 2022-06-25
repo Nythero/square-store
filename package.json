@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js --ext js,jsx"
+    "dev": "nodemon index.js --ext js,jsx",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,8 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.17.12",
+    "eslint": "^8.18.0",
+    "eslint-plugin-react": "^7.30.1",
     "nodemon": "^2.0.18"
   }
 }

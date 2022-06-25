@@ -2,18 +2,22 @@ const Router = require('express').Router()
 const React = require('react')
 const ReactDOMServer = require('react-dom/server')
 const { matchRoutes } = require('react-router-dom')
-const routes = require('./routes.jsx')
+const { StaticRouter } = require('react-router-dom/server')
+const App = require('../views/App.jsx')
+const prendas = require('../api/squareData.json')
+const routes = require('./routes.js')
+
+const site = (location, props) => {
+  return (
+    <StaticRouter location={location}>
+      <App {...props}/>
+    </StaticRouter>
+  )
+}
 
 Router.get('*', (req, res) => {
-  const props = { title: 'React Server Side Rendering',
-    initialNumber: req.params
-  }
-  const matchedRoutes = matchRoutes(routes, req.url)
-  const firstMatched = matchedRoutes[0]
-  if(firstMatched.route.path === '*')
-    res.status(404)
-  const component = matchedRoutes[0].route.component
-  const html = ReactDOMServer.renderToString(React.createElement(component, props))
+  const content = { content: prendas }
+  const html = ReactDOMServer.renderToString(site(req.url, content))
   res.send(html)
 })
 

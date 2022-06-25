@@ -1,16 +1,8 @@
 const React = require('react')
+const NavBar = require('../components/NavBar.jsx')
 
 const NotFound = () => {
-  return (
-    <html id='root'>
-      <head>
-        <title>Not Found</title>
-      </head>
-      <body>
-        <h1>Error 404: Not Found</h1>
-      </body>
-    </html>
-  )
+  return <h1>Error 404: Not Found</h1>
 }
 
 module.exports = NotFound

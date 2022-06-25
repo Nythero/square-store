@@ -1,0 +1,82 @@
+[
+  {
+    "id": 0,
+    "color": "red",
+    "nombre": "Cuadrado Rojo",
+    "precio": 150,
+    "esDestacado": true,
+    "link": "/prendas/0"
+  },
+  {
+    "id": 1,
+    "color": "black",
+    "nombre": "Cuadrado Negro",
+    "precio": 200,
+    "esDestacado": true,
+    "link": "/prendas/1"
+  },
+  {
+    "id": 2,
+    "color": "gray",
+    "nombre": "Cuadrado Gris",
+    "precio": 175,
+    "esDestacado": true,
+    "link": "/prendas/2"
+  },
+  {
+    "id": 3,
+    "color": "blue",
+    "nombre": "Cuadrado Azul",
+    "precio": 150,
+    "esDestacado": true,
+    "link": "/prendas/3"
+  },
+  {
+    "id": 4,
+    "color": "yellow",
+    "nombre": "Cuadrado Amarillo",
+    "precio": 150,
+    "esDestacado": true,
+    "link": "/prendas/4"
+  },
+  {
+    "id": 5,
+    "color": "orange",
+    "nombre": "Cuadrado Naranja",
+    "precio": 100,
+    "esDestacado": false,
+    "link": "/prendas/5"
+  },
+  {
+    "id": 6,
+    "color": "brown",
+    "nombre": "Cuadrado Marron",
+    "precio": 150,
+    "esDestacado": true,
+    "link": "/prendas/6"
+  },
+  {
+    "id": 7,
+    "color": "pink",
+    "nombre": "Cuadrado Rosa",
+    "precio": 150,
+    "esDestacado": false,
+    "link": "/prendas/7"
+  },
+  {
+    "id": 8,
+    "color": "green",
+    "nombre": "Cuadrado Verde",
+    "precio": 150,
+    "esDestacado": false,
+    "link": "/prendas/8"
+  },
+  {
+    "id": 9,
+    "color": "purple",
+    "nombre": "Cuadrado Violeta",
+    "precio": 150,
+    "esDestacado": false,
+    "link": "/prendas/9"
+  }
+]

@@ -2,17 +2,12 @@ const axios = require('axios')
 
 const baseUrl = '/api'
 
-const getDestacados = async () => {
-  const response = await axios.get(`${baseUrl}/destacados`)
-  return response.data
-}
-
-const getPrendas = async () => {
-  const response = await axios.get(`${baseUrl}/prendas`)
+const login = async (username, password) => {
+  const loginData = { username, password }
+  const response = await axios.post(`${baseUrl}/login`, loginData)
   return response.data
 }
 
 module.exports = {
-  getDestacados,
-  getPrendas
+  login
 }

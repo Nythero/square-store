@@ -69,6 +69,10 @@ const stateReducer = (state, action) => {
       const notificacion = { tipo: '', mensaje: '' }
       return objectWith(state, { notificacion })
     }
+    case('login'): {
+      const user = action.payload
+      return objectWith(state, { user })
+    }
     case('send-chat-message'):
       const message = action.payload
       const history = state.chat.history
@@ -82,7 +86,8 @@ const stateReducer = (state, action) => {
 const initialState = {
   carrito: [],
   notificacion: { tipo: '', mensaje: '' },
-  chat: { history: [] }
+  chat: { history: [] },
+  user: null
 }
 
 const App = (props) => {

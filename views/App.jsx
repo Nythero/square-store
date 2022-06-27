@@ -8,6 +8,7 @@ const Cart = require('./Cart.jsx')
 const Login = require('./Login.jsx')
 const Prenda = require('./Prenda.jsx')
 const Footer = require('../components/Footer.jsx')
+const Chat = require('../components/Chat.jsx')
 const { useReducer } = React
 const {
   DispatchContext,
@@ -68,6 +69,11 @@ const stateReducer = (state, action) => {
       const notificacion = { tipo: '', mensaje: '' }
       return objectWith(state, { notificacion })
     }
+    case('send-chat-message'):
+      const message = action.payload
+      const history = state.chat.history
+      const chat = objectWith(state.chat, { history: history.concat(message) })
+      return objectWith(state, { chat })
     default:
       return state
   }
@@ -75,7 +81,8 @@ const stateReducer = (state, action) => {
 
 const initialState = {
   carrito: [],
-  notificacion: { tipo: '', mensaje: '' }
+  notificacion: { tipo: '', mensaje: '' },
+  chat: { history: [] }
 }
 
 const App = (props) => {
@@ -109,6 +116,7 @@ const App = (props) => {
           <Route path='/' element={<Index content={prendas.filter(p => p.esDestacado)} />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
+        <Chat />
         <Footer />
           </DispatchContext.Provider>
         </StateContext.Provider>

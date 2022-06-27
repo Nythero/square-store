@@ -3,12 +3,17 @@ const { useField } = require('../hooks')
 const InputField = require('../components/InputField.jsx')
 const apiService = require('../services/api.js')
 const { useContext } = React
-const { DispatchContext } = require('./Contexts.js')
+const { 
+  DispatchContext,
+  StateContext
+} = require('./Contexts.js')
+const { Navigate } = require('react-router-dom')
 
 const Login = () => {
   const [username, resetUsername] = useField('username', 'text')
   const [password, resetPassword] = useField('password', 'password')
   const dispatch = useContext(DispatchContext)
+  const user = useContext(StateContext).user
   const handleSubmit = async (event) => {
     event.preventDefault()
     const user = await apiService.login(
@@ -21,6 +26,9 @@ const Login = () => {
   }
   return (
     <div>
+      {
+	user && <Navigate to='/' replace={true} />
+      }
       <form onSubmit={handleSubmit}>
         <InputField {...username} />
         <InputField {...password} />

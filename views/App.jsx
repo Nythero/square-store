@@ -7,6 +7,7 @@ const Prendas = require('./Prendas.jsx')
 const Cart = require('./Cart.jsx')
 const Login = require('./Login.jsx')
 const Prenda = require('./Prenda.jsx')
+const Dashboard = require('./Dashboard.jsx')
 const Footer = require('../components/Footer.jsx')
 const Chat = require('../components/Chat.jsx')
 const { useReducer } = React
@@ -73,6 +74,10 @@ const stateReducer = (state, action) => {
       const user = action.payload
       return objectWith(state, { user })
     }
+    case('logout'): {
+      const user = null
+      return objectWith(state, { user })
+    }
     case('send-chat-message'):
       const message = action.payload
       const history = state.chat.history
@@ -118,6 +123,8 @@ const App = (props) => {
           <Route path='/prendas' element={<Prendas content={prendas} />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/dashboard' element={<Dashboard user={state.user} />} />
+          <Route path='/logout' element={null} />
           <Route path='/' element={<Index content={prendas.filter(p => p.esDestacado)} />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

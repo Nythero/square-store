@@ -1,6 +1,6 @@
 const { useState } = require('react')
 
-const useField = (type) => {
+const useField = (name, type) => {
   const [value, setValue] = useState('')
 
   const onChange = (event) => setValue(event.target.value)
@@ -9,6 +9,7 @@ const useField = (type) => {
 
   return [
     {
+      name,
       value,
       onChange,
       type

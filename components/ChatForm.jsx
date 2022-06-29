@@ -5,7 +5,7 @@ const { useContext } = React
 const { DispatchContext } = require('../views/Contexts.js')
 
 const ChatForm = () => {
-  const [field, resetField] = useField('text')
+  const [field, resetField] = useField('message', 'text')
   const dispatch = useContext(DispatchContext)
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -15,9 +15,11 @@ const ChatForm = () => {
     dispatch({ type: 'send-chat-message', payload: message })
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <input name='message' {...field} />
-      <button />
+    <form className='d-flex mb-0 align-self-end' onSubmit={handleSubmit}>
+      <input className='form-control' {...field} />
+      <button className='btn btn-outline-dark' style={{ marginLeft: "1em" }}>
+        Send
+      </button>
     </form>
   )
 }

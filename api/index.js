@@ -17,18 +17,18 @@ const squareData = require('./squareData.json')
     false
 
   if(!isPasswordCorrect)
-    return response.status(401).json({ error: 'invalid username or password' })
+    return res.status(401).json({ error: 'invalid username or password' })
 
   const userForToken = {
     username: user.username,
-    id: user._id
+    id: user.id
   }
 
   const token = jwt.sign(userForToken, SECRET)
-
   res.status(200).json({
     token: token,
-    username: user.username
+    username: user.username,
+    type: user.type
   })
 })
 

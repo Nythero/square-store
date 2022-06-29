@@ -9,7 +9,7 @@ const Login = require('./Login.jsx')
 const Prenda = require('./Prenda.jsx')
 const Dashboard = require('./Dashboard.jsx')
 const Footer = require('../components/Footer.jsx')
-const Chat = require('../components/Chat.jsx')
+const HideableChat = require('../components/HideableChat.jsx')
 const { useReducer } = React
 const {
   DispatchContext,
@@ -78,11 +78,20 @@ const stateReducer = (state, action) => {
       const user = null
       return objectWith(state, { user })
     }
-    case('send-chat-message'):
+    case('send-chat-message'): {
       const message = action.payload
+      const messageObject = { message, type: 'sended' }
       const history = state.chat.history
-      const chat = objectWith(state.chat, { history: history.concat(message) })
+      const chat = objectWith(state.chat, { history: history.concat(messageObject) })
       return objectWith(state, { chat })
+    }
+    case('receive-chat-message'): {
+      const message = action.payload
+      const messageObject = { message, type: 'received' }
+      const history = state.chat.history
+      const chat = objectWith(state.chat, { history: history.concat(messageObject) })
+      return objectWith(state, { chat })
+    }
     default:
       return state
   }
@@ -128,7 +137,7 @@ const App = (props) => {
           <Route path='/' element={<Index content={prendas.filter(p => p.esDestacado)} />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
-        <Chat />
+        {!state.user && <HideableChat />}
         <Footer />
           </DispatchContext.Provider>
         </StateContext.Provider>

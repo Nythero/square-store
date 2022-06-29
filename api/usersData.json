@@ -2,6 +2,7 @@
   {
     "username": "username",
     "passwordHash": "$2b$10$wGeAo1Gfkzf22rTLKA0iN.VzYt62S8NaRGZjYDqPXr88I7ArVf3aW",
-    "id": 1
+    "id": 1,
+    "type": "support"
   }
 ]

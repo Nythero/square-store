@@ -6,8 +6,7 @@ let webSocketServer
 
 const handleMessage = function(event) {
   const message = event.data
-  console.log(message)
-  chat.sendMessage(this, message)
+  return chat.handleMessage(this, message)
 }
 
 const decode = token => {
@@ -24,13 +23,10 @@ const decode = token => {
 const handleFirstMessage = ws => event => {
   const message = event.data
   let decodedToken = decode(message)
-  console.log(decodedToken)
   if(!decodedToken || !decodedToken.id)
     chat.addClient(ws)
-  else {
-    const user = usersData.find(u => u.id === decodedToken.id)
+  else
     chat.addSupport(ws)
-  }
   ws.addEventListener('message', handleMessage)
 }
 

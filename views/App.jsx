@@ -21,6 +21,39 @@ const objectWith = (object, objectWithValues) => {
   return Object.assign({}, object, objectWithValues)
 }
 
+const addMessageClient = (chat, message) => {
+  const messageObject = { message, type: 'received' }
+  const history = chat.history
+  return objectWith(chat, { history: history.concat(messageObject) })
+}
+
+const addMessageSupport = (chat, message, id) => {
+  const messageObject = { message, type: 'received' }
+  const room = chat.rooms[id]
+  const history = room.history
+  const newHistory = objectWith(room, { history: history.concat(messageObject) })
+  return objectWith(chat, { history: newHistory })
+}
+
+const addMessage = (user, chat, message, id) => {
+  switch(userType(user)) {
+    case 'support':
+      return addMessageSupport(chat, message, id)
+      break
+    case 'client':
+      return addMessageClient(chat, message)
+      break
+    default:
+      break
+  }
+}
+
+const userType = user => {
+  if(!user)
+    return 'client'
+  return user.type
+}
+
 const stateReducer = (state, action) => {
   switch(action.type) {
     case('add-to-cart'): {
@@ -78,18 +111,30 @@ const stateReducer = (state, action) => {
       const user = null
       return objectWith(state, { user })
     }
+    case('connect-chat-user'): {
+      const chat = { history: [] }
+      return objectWith(state, { chat })
+    }
+    case('connect-chat-support'): {
+      const chat = { openRooms: [] }
+      return objectWith(state, { chat })
+    }
+    case('set-avaliable-rooms'): {
+      const openRooms = action.payload
+      const chat = state.chat
+      const newChat = objectWith(chat, { openRooms })
+      return objectWith(state, { chat: newChat })
+    }
     case('send-chat-message'): {
-      const message = action.payload
-      const messageObject = { message, type: 'sended' }
-      const history = state.chat.history
-      const chat = objectWith(state.chat, { history: history.concat(messageObject) })
+      const { message, id } = action.payload
+      const msg = { message, type: 'sended' }
+      const chat = addMessage(state.chat, msg, id)
       return objectWith(state, { chat })
     }
     case('receive-chat-message'): {
-      const message = action.payload
-      const messageObject = { message, type: 'received' }
-      const history = state.chat.history
-      const chat = objectWith(state.chat, { history: history.concat(messageObject) })
+      const { message, id } = action.payload
+      const msg = { message, type: 'received' }
+      const chat = addMessage(state.chat, msg, id)
       return objectWith(state, { chat })
     }
     default:
@@ -100,7 +145,7 @@ const stateReducer = (state, action) => {
 const initialState = {
   carrito: [],
   notificacion: { tipo: '', mensaje: '' },
-  chat: { history: [] },
+  chat: null,
   user: null
 }
 

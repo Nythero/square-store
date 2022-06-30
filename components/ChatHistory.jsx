@@ -2,25 +2,23 @@ const React = require('react')
 
 const messageKey = message => `${message}${Math.floor(Math.random() * 10000)}`
 
-const mapAlignment = type => {
-  if (type === 'received')
-    return 'flex-start'
-  else if (type === 'sended')
-    return 'flex-end'
-}
-
-const style = (type) => {
-  const alignment = mapAlignment(type)
-  return {
+const styles = {
+  sended: {
     maxWidth: '75%',
     overflowWrap: 'anywhere',
-    alignSelf: mapAlignment(type)
-  }
+    alignSelf: 'flex-end'
+  },
+  received: {
+    maxWidth: '75%',
+    overflowWrap: 'anywhere',
+    alignSelf: 'flex-start',
+    backgroundColor: '#d5d5d5'
+  } 
 }
 
 const classNames = {
   sended: 'rounded bg-dark text-light p-3',
-  received: 'rounded bg-light p-3'
+  received: 'rounded p-3'
 }
 
 const ChatHistory = ({ history }) => {
@@ -29,9 +27,9 @@ const ChatHistory = ({ history }) => {
       {
 	history.map(
 	  message => (
-	    <p 
+	    <p
 	      className={classNames[message.type]}
-	      style={style(message.type)}
+	      style={styles[message.type]}
 	      key={messageKey(message.message)}>
 	      {message.message}
 	    </p>

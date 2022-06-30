@@ -14,14 +14,24 @@ const ClientChat = () => {
   const dispatch = useContext(DispatchContext)
 
   const handleMessage = (event) => {
-    const message = event.data
-    dispatch({ type: 'receive-chat-message', payload: message })
+    const data = event.data
+    const parsedData = JSON.parse(data)
+    console.log(parsedData)
+    switch(parsedData.type) {
+      case 'message':
+        dispatch({ type: 'receive-chat-message-client', payload: parsedData.payload })
+      default:
+	break
+    }
   }
 
   const handleFirstMessage = (event) => {
-    const message = event.data
-    if(message === 'support-agent-connected') {
+    const data = event.data
+    const parsedData = JSON.parse(data)
+    console.log(parsedData)
+    if(parsedData.type === 'support-agent-connected') {
       event.target.addEventListener('message', handleMessage)
+      dispatch({ type: 'connect-chat-user' })
       setChat('ready')
     }
     else {
@@ -30,7 +40,7 @@ const ClientChat = () => {
   }
 
   const handleClick = () => {
-    websocket.connect(null, websocket.handleClientFirstConnection)
+    websocket.connect(null, handleFirstMessage, { once: true })
     setChat('waiting')
   }
 

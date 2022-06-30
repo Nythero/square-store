@@ -12,7 +12,7 @@ const ChatForm = () => {
     const message = event.target.message.value
     websocket.send(message)
     resetField()
-    dispatch({ type: 'send-chat-message', payload: message })
+    dispatch({ type: 'send-chat-message-client', payload: message })
   }
   return (
     <form className='d-flex mb-0 align-self-end' onSubmit={handleSubmit}>

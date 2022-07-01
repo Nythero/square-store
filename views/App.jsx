@@ -111,11 +111,11 @@ const stateReducer = (state, action) => {
     case('logout'): {
       const user = null
       return objectWith(state, { user })
-    }/*
+    }
     case('connect-chat-user'): {
       const chat = { history: [] }
       return objectWith(state, { chat })
-    }*/
+    }
     case('connect-chat-support'): {
       const chat = { openRooms: [], actual: null }
       return objectWith(state, { chat })
@@ -125,7 +125,7 @@ const stateReducer = (state, action) => {
       const chat = state.chat
       const newChat = objectWith(chat, { openRooms })
       return objectWith(state, { chat: newChat })
-    }
+    }*/
     case('send-chat-message'): {
       const { message, id } = action.payload
       const msg = { message, type: 'sended' }
@@ -138,7 +138,7 @@ const stateReducer = (state, action) => {
       const msg = { message, type: 'received' }
       const chat = addMessage(state.user, state.chat, msg, id)
       return objectWith(state, { chat })
-    }*/
+    }
     default:
       return state
   }

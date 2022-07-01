@@ -2,6 +2,7 @@ const React = require('react')
 const Chat = require('./Chat.jsx')
 const { useState } = React
 const websocket = require('../services/websocket.js')
+const clientWebsocket = require('../services/clientWebsocket.js')
 const { DispatchContext } = require('../views/Contexts.js')
 const { useContext, useEffect } = React
 
@@ -13,34 +14,8 @@ const ClientChat = () => {
   const [chat, setChat] = useState('start')
   const dispatch = useContext(DispatchContext)
 
-  const handleMessage = (event) => {
-    const data = event.data
-    const parsedData = JSON.parse(data)
-    console.log(parsedData)
-    switch(parsedData.type) {
-      case 'message':
-        dispatch({ type: 'receive-chat-message-client', payload: parsedData.payload })
-      default:
-	break
-    }
-  }
-
-  const handleFirstMessage = (event) => {
-    const data = event.data
-    const parsedData = JSON.parse(data)
-    console.log(parsedData)
-    if(parsedData.type === 'support-agent-connected') {
-      event.target.addEventListener('message', handleMessage)
-      dispatch({ type: 'connect-chat-user' })
-      setChat('ready')
-    }
-    else {
-      setChat('waiting')
-    }
-  }
-
   const handleClick = () => {
-    websocket.connect(null, handleFirstMessage, { once: true })
+    clientWebsocket.connect(dispatch, setChat)
     setChat('waiting')
   }
 

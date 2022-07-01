@@ -32,7 +32,7 @@ const SupportChat = () => {
 
   if(chat) {
     return (
-      <div className='row h-75'>
+      <div className='row h-75 flex-nowrap'>
         <SupportChatList openRooms={chat.openRooms} changeRoom={changeRoom} />
         <div className='col-8 d-flex justify-content-stretch'>
           {

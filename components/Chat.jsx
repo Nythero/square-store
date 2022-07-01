@@ -13,12 +13,18 @@ const history = chat => {
     return []
 }
 
+const chatStyle = {
+  minHeight: 0
+}
+
 const Chat = ({ sendMessage }) => {
   const { chat } = useContext(StateContext)
 
   if(chat)
     return (
-      <div className='d-flex flex-column border bg-light p-3 flex-grow-1'>
+      <div 
+        style={chatStyle}
+        className='d-flex flex-column border bg-light p-3 flex-grow-1'>
         <ChatHistory history={history(chat)}/>
         <ChatForm chat={chat} sendMessage={sendMessage}/>
       </div>

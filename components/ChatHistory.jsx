@@ -21,10 +21,14 @@ const classNames = {
   received: 'rounded p-3'
 }
 
+const historyStyle = {
+  overflowY: 'scroll'
+}
+
 const ChatHistory = ({ history }) => {
   console.log(history)
   return (
-    <div className='d-flex flex-column flex-grow-1'>
+    <div style={historyStyle} className='d-flex flex-column flex-grow-1'>
       {
 	history.map(
 	  message => (

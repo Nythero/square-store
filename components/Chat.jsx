@@ -18,7 +18,7 @@ const Chat = ({ sendMessage }) => {
 
   if(chat)
     return (
-      <div className='d-flex flex-column border rounded bg-light p-3 flex-grow-1'>
+      <div className='d-flex flex-column border bg-light p-3 flex-grow-1'>
         <ChatHistory history={history(chat)}/>
         <ChatForm chat={chat} sendMessage={sendMessage}/>
       </div>

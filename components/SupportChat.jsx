@@ -5,6 +5,7 @@ const { useContext, useEffect } = React
 const { StateContext, DispatchContext } = require('../views/Contexts.js')
 const supportWebsocket = require('../services/supportWebsocket.js')
 const SupportChatList = require('./SupportChatList.jsx')
+const NoChat = require('./NoChat.jsx')
 
 const SupportChat = () => {
   const { user, chat } = useContext(StateContext)
@@ -31,9 +32,14 @@ const SupportChat = () => {
 
   if(chat) {
     return (
-      <div>
+      <div className='row h-75'>
         <SupportChatList openRooms={chat.openRooms} changeRoom={changeRoom} />
-        <Chat sendMessage={sendMessage}/>
+        <div className='col-8 d-flex justify-content-stretch'>
+          {
+	    (chat.actual !== null)? <Chat sendMessage={sendMessage}/> :
+	      <NoChat />
+	  }
+        </div>
       </div>
     )
   }

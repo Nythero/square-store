@@ -30,12 +30,26 @@ const addClient = (ws) => {
   openRooms.push(newRoom)
 }
 
-const sendMessage = (ws, msg, room) => {
-  const message = { type: 'message', payload: msg }
-  if(room.consultant === ws && room.support)
-    room.support.send(JSON.stringify(message))
-  else if (room.support === ws && room.consultant)
-    room.consultant.send(JSON.stringify(message))
+const clientMessage = (message, room) => {
+  const payload = {
+    message: message.payload,
+    id: room.id
+  }
+  return {
+    type: message.type,
+    payload
+  }
+}
+
+const sendMessage = (ws, message, room) => {
+  if(room.consultant === ws && room.support) {
+    const msg = JSON.stringify(clientMessage(message, room))
+    room.support.send(msg)
+  }
+  else if (room.support === ws && room.consultant) {
+    const msg = JSON.stringify(message)
+    room.consultant.send(msg)
+  }
   else
     console.log('The room is not full')
 }
@@ -55,7 +69,7 @@ const handleMessage = (ws, msg) => {
       }
     case 'message':
       const room = openRooms.find(isMember(ws))
-      sendMessage(ws, msg, room)
+      sendMessage(ws, parsedMessage, room)
     default:
       break
   }

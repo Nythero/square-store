@@ -1,18 +1,17 @@
 const React = require('react')
-const websocket = require('../services/websocket.js')
 const { useField } = require('../hooks')
 const { useContext } = React
 const { DispatchContext } = require('../views/Contexts.js')
 
-const ChatForm = ({ handleSubmit }) => {
+const ChatForm = ({ sendMessage }) => {
   const [field, resetField] = useField('message', 'text')
   const dispatch = useContext(DispatchContext)
-/*  const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
     const message = event.target.message.value
-    websocket.send(message)
+    sendMessage(message)
     resetField()
-  }*/
+  }
   return (
     <form className='d-flex mb-0 align-self-end' onSubmit={handleSubmit}>
       <input className='form-control' {...field} />

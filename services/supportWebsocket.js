@@ -1,8 +1,10 @@
 const websocket = require('./websocket.js')
+const objectWith = require('../utils/objectWith.js')
 
 const handleMessage = dispatch => event => {
     const data = event.data
     const parsedData = JSON.parse(data)
+    console.log(parsedData)
     switch(parsedData.type) {
       case 'avaliable-rooms':
 	dispatch({ type: 'set-avaliable-rooms', payload: parsedData.payload })
@@ -10,7 +12,8 @@ const handleMessage = dispatch => event => {
       case 'new-avaliable-room':
 	dispatch({ type: 'add-avaliable-room', payload: parsedData.payload })
       case 'message':
-        dispatch({ type: 'receive-chat-message', payload: parsedData.payload })
+        const payload = objectWith(parsedData.payload, { type: 'received' })
+        dispatch({ type: 'receive-chat-message', payload })
 	break
       default:
 	console.log(data)
@@ -29,7 +32,8 @@ const sendMessage = (message, id) => {
 }
 
 const supportWebsocket = {
-  connect
+  connect,
+  sendMessage
 }
 
 module.exports = supportWebsocket

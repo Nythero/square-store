@@ -1,11 +1,13 @@
 const websocket = require('./websocket.js')
+const objectWith = require('../utils/objectWith.js')
 
 const handleMessage = dispatch => event => {
   const data = event.data
   const parsedData = JSON.parse(data)
   switch(parsedData.type) {
-    case 'message':
-      dispatch({ type: 'receive-chat-message', payload: parsedData.payload })
+    case 'message': 
+      const payload = objectWith(parsedData.payload, { type: 'received' })
+      dispatch({ type: 'receive-chat-message', payload })
     default:
       break
   }
@@ -28,8 +30,14 @@ const connect = (dispatch, setChat) => {
   websocket.connect(null, handleFirstMessage(dispatch, setChat), { once: true })
 }
 
+const sendMessage = message => {
+  const msg = { type: 'message', payload: message }
+  websocket.send(msg)
+}
+
 const clientWebsocket = {
-  connect
+  connect,
+  sendMessage
 }
 
 module.exports = clientWebsocket

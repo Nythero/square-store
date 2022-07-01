@@ -18,10 +18,15 @@ const ClientChat = () => {
     clientWebsocket.connect(dispatch, setChat)
     setChat('waiting')
   }
+  
+  const sendMessage = (message) => {
+    clientWebsocket.sendMessage(message)
+    dispatch({ type: 'send-chat-message', payload: { message, type: 'sended' } })
+  }
 
   switch(chat) {
     case 'ready':
-      return <Chat />
+      return <Chat sendMessage={sendMessage}/>
     case 'start':
       return (
 	<div className={startClass}>

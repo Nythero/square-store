@@ -1,9 +1,10 @@
 const React = require('react')
 const websocket = require('../services/websocket.js')
 
-const SupportChatList = ({ openRooms }) => {
+const SupportChatList = ({ openRooms, changeRoom }) => {
   const handleClick = (id) => () => {
     websocket.joinRoom(id)
+    changeRoom(id)
   }
   return (
     <div>

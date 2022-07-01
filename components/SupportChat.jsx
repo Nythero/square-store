@@ -14,18 +14,26 @@ const SupportChat = () => {
     supportWebsocket.connect(user, dispatch)
   }, [])
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const message = event.target.message.value
+  const sendMessage = (message) => {
     const id = chat.actual
-    supportWebSocket.sendMessage(message, id)
+    supportWebsocket.sendMessage(message, id)
+    const payload = {
+      message,
+      type: 'sended',
+      id
+    }
+    dispatch({ type: 'send-chat-message', payload })
+  }
+
+  const changeRoom = (id) => {
+    dispatch({ type: 'set-actual-chat-room', payload: id})
   }
 
   if(chat) {
     return (
       <div>
-        <SupportChatList openRooms={chat.openRooms}/>
-        <Chat handleSubmit={handleSubmit}/>
+        <SupportChatList openRooms={chat.openRooms} changeRoom={changeRoom} />
+        <Chat sendMessage={sendMessage}/>
       </div>
     )
   }

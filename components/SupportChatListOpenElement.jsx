@@ -2,7 +2,7 @@ const React = require('react')
 const { useContext } = React
 const { StateContext } = require('../views/Contexts.js')
 
-const liClassName = 'list-group-item d-flex justify-content-around align-items-center'
+const liClassName = 'list-group-item d-flex justify-content-around align-items-center border-0 border-top'
 const liStyle = { height: "10%" }
 
 const SupportChatListElement = ({ handleClick, room }) => {

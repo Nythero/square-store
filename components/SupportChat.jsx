@@ -26,14 +26,10 @@ const SupportChat = () => {
     dispatch({ type: 'send-chat-message', payload })
   }
 
-  const changeRoom = (id) => {
-    dispatch({ type: 'set-actual-chat-room', payload: id})
-  }
-
   if(chat) {
     return (
       <div className='row h-75 flex-nowrap'>
-        <SupportChatList openRooms={chat.openRooms} changeRoom={changeRoom} />
+        <SupportChatList />
         <div className='col-8 d-flex justify-content-stretch'>
           {
 	    (chat.actual !== null)? <Chat sendMessage={sendMessage}/> :

@@ -112,7 +112,12 @@ const stateReducer = (state, action) => {
       return objectWith(state, { chat })
     }
     case('connect-chat-support'): {
-      const chat = { openRooms: [], actual: null }
+      const [OPEN, TAKEN] = [true, false]
+      const chat = { 
+	openRooms: [],
+	actual: null,
+	visibleRooms: OPEN
+      }
       return objectWith(state, { chat })
     }
     case('set-avaliable-rooms'): {
@@ -124,7 +129,6 @@ const stateReducer = (state, action) => {
     case('send-chat-message'): {
       const message = action.payload
       const chat = addMessage(state.user, state.chat, message)
-      console.log('send-chat-message')
       return objectWith(state, { chat })
     }
     case('receive-chat-message'): {
@@ -135,6 +139,11 @@ const stateReducer = (state, action) => {
     case('set-actual-chat-room'): {
       const id = action.payload
       const chat = objectWith(state.chat, { actual: id })
+      return objectWith(state, { chat })
+    }
+    case('toggle-chat-visible-rooms'): {
+      const visibleRooms = state.chat.visibleRooms
+      const chat = objectWith(state.chat, { visibleRooms: !visibleRooms })
       return objectWith(state, { chat })
     }
     default:

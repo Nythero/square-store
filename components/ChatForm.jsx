@@ -4,16 +4,15 @@ const { useField } = require('../hooks')
 const { useContext } = React
 const { DispatchContext } = require('../views/Contexts.js')
 
-const ChatForm = () => {
+const ChatForm = ({ handleSubmit }) => {
   const [field, resetField] = useField('message', 'text')
   const dispatch = useContext(DispatchContext)
-  const handleSubmit = (event) => {
+/*  const handleSubmit = (event) => {
     event.preventDefault()
     const message = event.target.message.value
     websocket.send(message)
     resetField()
-    dispatch({ type: 'send-chat-message-client', payload: message })
-  }
+  }*/
   return (
     <form className='d-flex mb-0 align-self-end' onSubmit={handleSubmit}>
       <input className='form-control' {...field} />

@@ -4,15 +4,14 @@ const ChatForm = require('./ChatForm.jsx')
 const { useContext, useEffect } = React
 const { StateContext } = require('../views/Contexts.js')
 
-const Chat = () => {
+const Chat = ({ handleSubmit }) => {
   const { chat } = useContext(StateContext)
-  console.log(chat)
 
   if(chat)
     return (
       <div className='d-flex flex-column border rounded bg-light p-3 flex-grow-1'>
         <ChatHistory history={[]}/>
-        <ChatForm chat={chat}/>
+        <ChatForm chat={chat} handleSubmit={handleSubmit}/>
       </div>
     )
   else

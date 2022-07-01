@@ -20,7 +20,7 @@ const Alert = require('../components/Alert.jsx')
 const objectWith = (object, objectWithValues) => {
   return Object.assign({}, object, objectWithValues)
 }
-
+/*
 const addMessageClient = (chat, message) => {
   const messageObject = { message, type: 'received' }
   const history = chat.history
@@ -36,6 +36,7 @@ const addMessageSupport = (chat, message, id) => {
 }
 
 const addMessage = (user, chat, message, id) => {
+	console.log(userType(user))
   switch(userType(user)) {
     case 'support':
       return addMessageSupport(chat, message, id)
@@ -53,7 +54,7 @@ const userType = user => {
     return 'client'
   return user.type
 }
-
+*/
 const stateReducer = (state, action) => {
   switch(action.type) {
     case('add-to-cart'): {
@@ -110,15 +111,15 @@ const stateReducer = (state, action) => {
     case('logout'): {
       const user = null
       return objectWith(state, { user })
-    }
+    }/*
     case('connect-chat-user'): {
       const chat = { history: [] }
       return objectWith(state, { chat })
-    }
+    }*/
     case('connect-chat-support'): {
-      const chat = { openRooms: [] }
+      const chat = { openRooms: [], actual: null }
       return objectWith(state, { chat })
-    }
+    }/*
     case('set-avaliable-rooms'): {
       const openRooms = action.payload
       const chat = state.chat
@@ -128,15 +129,16 @@ const stateReducer = (state, action) => {
     case('send-chat-message'): {
       const { message, id } = action.payload
       const msg = { message, type: 'sended' }
-      const chat = addMessage(state.chat, msg, id)
+      const chat = addMessage(state.user, state.chat, msg, id)
+      console.log(chat)
       return objectWith(state, { chat })
     }
     case('receive-chat-message'): {
       const { message, id } = action.payload
       const msg = { message, type: 'received' }
-      const chat = addMessage(state.chat, msg, id)
+      const chat = addMessage(state.user, state.chat, msg, id)
       return objectWith(state, { chat })
-    }
+    }*/
     default:
       return state
   }

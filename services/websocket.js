@@ -22,7 +22,6 @@ const close = () => {
 const send = (message) => {
   if(!ws)
     return
-  const msg = { type: 'message', payload: message }
   ws.send(JSON.stringify(msg))
 }
 

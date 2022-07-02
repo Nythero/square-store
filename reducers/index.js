@@ -12,12 +12,12 @@ const addMessageSupportRoom = (room, message) => {
   return objectWith(room, { history: newHistory })
 }
 
-const addMessageSupportOpenRooms = (openRooms, message, id) => {
-  const room = openRooms[id]
+const addMessageSupportTakenRooms = (takenRooms, message, id) => {
+  const room = takenRooms[id]
   const newRoom = addMessageSupportRoom(room, message)
-  return openRooms.map(
-    r => (r.id === id)? newRoom : r
-  )
+  const aux = {}
+  aux[id] = newRoom
+  return objectWith(takenRooms, aux)
 }
 
 const addMessageSupport = (chat, payload) => {
@@ -26,8 +26,8 @@ const addMessageSupport = (chat, payload) => {
     message: payload.message,
     type: payload.type
   }
-  const openRooms = addMessageSupportOpenRooms(chat.openRooms, message, id)
-  return objectWith(chat, { openRooms })
+  const takenRooms = addMessageSupportTakenRooms(chat.takenRooms, message, id)
+  return objectWith(chat, { takenRooms })
 }
 
 const addMessage = (user, chat, payload) => {
@@ -47,6 +47,23 @@ const userType = user => {
   if(!user)
     return 'client'
   return user.type
+}
+
+const value = kv => kv[1]
+
+const filterMap = (map, mapFunction) => {
+  const entries = Object.entries(map)
+  const filteredEntries = entries.filter(kv => mapFunction(value(kv)))
+  return Object.fromEntries(filteredEntries)
+}
+
+const takeOpenRoom = (chat, id) => {
+  const room = chat.openRooms[id]
+  const openRooms = filterMap(chat.openRooms, r => r.id !== id)
+  const aux = {}
+  aux[id] = room
+  const takenRooms = objectWith(chat.takenRooms, aux)
+  return objectWith(chat, { openRooms, takenRooms })
 }
 
 const stateReducer = (state, action) => {
@@ -114,7 +131,8 @@ const stateReducer = (state, action) => {
     case('connect-chat-support'): {
       const [OPEN, TAKEN] = [true, false]
       const chat = { 
-	openRooms: [],
+	openRooms: {},
+	takenRooms: {},
 	actual: null,
 	visibleRooms: OPEN
       }
@@ -144,6 +162,11 @@ const stateReducer = (state, action) => {
     case('toggle-chat-visible-rooms'): {
       const visibleRooms = state.chat.visibleRooms
       const chat = objectWith(state.chat, { visibleRooms: !visibleRooms })
+      return objectWith(state, { chat })
+    }
+    case('take-open-room'): {
+      const id = action.payload
+      const chat = takeOpenRoom(state.chat, id)
       return objectWith(state, { chat })
     }
     default:

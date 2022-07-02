@@ -8,16 +8,15 @@ const SupportChatListOpenElement = require('./SupportChatListOpenElement.jsx')
 const websocket = require('../services/websocket.js')
 
 const SupportChatListOpen = () => {
-  const openRooms = useContext(StateContext).chat.openRooms
+  const openRoomsObject = useContext(StateContext).chat.openRooms
+  const openRooms = Object.values(openRoomsObject)
   const dispatch = useContext(DispatchContext)
-
-  const changeRoom = (id) => {
-    dispatch({ type: 'set-actual-chat-room', payload: id})
-  }
 
   const handleClick = (id) => () => {
     websocket.joinRoom(id)
-    changeRoom(id)
+    dispatch({ type: 'take-open-room', payload: id })
+    dispatch({ type: 'set-actual-chat-room', payload: id})
+    dispatch({ type: 'toggle-chat-visible-rooms' })
   }
 
   return openRooms.map(r =>

@@ -3,7 +3,6 @@ require('babel-register')({
 })
 const http = require('http')
 const app = require('./app.js')
-require('./services/websocket.js')
 
 const server = http.createServer(app)
 

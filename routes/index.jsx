@@ -3,7 +3,7 @@ const React = require('react')
 const ReactDOMServer = require('react-dom/server')
 const { matchRoutes } = require('react-router-dom')
 const { StaticRouter } = require('react-router-dom/server')
-const App = require('../views/App.jsx')
+const App = require('../client/views/App.jsx')
 const prendas = require('../api/squareData.json')
 const routes = require('./routes.js')
 

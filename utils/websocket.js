@@ -1,5 +1,5 @@
 const WebSocket = require('ws')
-const usersData = require('./api/usersData.json')
+const usersData = require('../api/usersData.json')
 const chat = require('./chat.js')
 
 let webSocketServer
@@ -11,7 +11,7 @@ const handleMessage = function(event) {
 
 const decode = token => {
   const jwt = require('jsonwebtoken')
-  const { SECRET } = require('./utils/config.js')
+  const { SECRET } = require('./config.js')
   try {
     return jwt.verify(token, SECRET)
   }

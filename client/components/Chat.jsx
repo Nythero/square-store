@@ -4,29 +4,19 @@ const ChatForm = require('./ChatForm.jsx')
 const { useContext, useEffect } = React
 const { StateContext } = require('../views/Contexts.js')
 
-const history = chat => {
-  if(chat.history)
-    return chat.history
-  else if (chat.openRooms[chat.actual])
-    return chat.openRooms[chat.actual].history
-  else
-    return []
-}
-
 const chatStyle = {
   minHeight: 0
 }
 
-const Chat = ({ sendMessage }) => {
-  const { chat } = useContext(StateContext)
-
+const Chat = ({ sendMessage, chat }) => {
+  console.log(chat)
   if(chat)
     return (
       <div 
         style={chatStyle}
         className='d-flex flex-column border bg-light p-3 flex-grow-1'>
-        <ChatHistory history={history(chat)}/>
-        <ChatForm chat={chat} sendMessage={sendMessage}/>
+        <ChatHistory history={chat.history}/>
+        <ChatForm sendMessage={sendMessage}/>
       </div>
     )
   else

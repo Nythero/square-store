@@ -3,7 +3,10 @@ const Chat = require('./Chat.jsx')
 const { useState } = React
 const websocket = require('../services/websocket.js')
 const clientWebsocket = require('../services/clientWebsocket.js')
-const { DispatchContext } = require('../views/Contexts.js')
+const {
+  DispatchContext, 
+  StateContext
+} = require('../views/Contexts.js')
 const { useContext, useEffect } = React
 
 const startClass = `d-flex flex-column justify-content-center 
@@ -11,12 +14,13 @@ const startClass = `d-flex flex-column justify-content-center
   `
 
 const ClientChat = () => {
-  const [chat, setChat] = useState('start')
+  const [state, setState] = useState('start')
   const dispatch = useContext(DispatchContext)
+  const chat = useContext(StateContext).chat
 
   const handleClick = () => {
-    clientWebsocket.connect(dispatch, setChat)
-    setChat('waiting')
+    clientWebsocket.connect(dispatch, setState)
+    setState('waiting')
   }
   
   const sendMessage = (message) => {
@@ -24,9 +28,11 @@ const ClientChat = () => {
     dispatch({ type: 'send-chat-message', payload: { message, type: 'sended' } })
   }
 
-  switch(chat) {
+  switch(state) {
     case 'ready':
-      return <Chat sendMessage={sendMessage}/>
+      return <Chat
+        sendMessage={sendMessage}
+        chat={chat}/>
     case 'start':
       return (
 	<div className={startClass}>

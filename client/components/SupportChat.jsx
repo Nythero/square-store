@@ -7,6 +7,12 @@ const supportWebsocket = require('../services/supportWebsocket.js')
 const SupportChatList = require('./SupportChatList.jsx')
 const NoChat = require('./NoChat.jsx')
 
+const visibleRooms = chat => chat.visibleRooms?
+  chat.openRooms :
+  chat.takenRooms
+
+const currentRoom = chat => visibleRooms(chat)[chat.actual]
+
 const SupportChat = () => {
   const { user, chat } = useContext(StateContext)
   const dispatch = useContext(DispatchContext)
@@ -32,7 +38,10 @@ const SupportChat = () => {
         <SupportChatList />
         <div className='col-8 d-flex justify-content-stretch'>
           {
-	    (chat.actual !== null)? <Chat sendMessage={sendMessage}/> :
+	    (chat.actual !== null)?
+              <Chat 
+                sendMessage={sendMessage}
+                chat={currentRoom(chat)}/> :
 	      <NoChat />
 	  }
         </div>

@@ -26,7 +26,6 @@ const historyStyle = {
 }
 
 const ChatHistory = ({ history }) => {
-  console.log(history)
   return (
     <div style={historyStyle} className='d-flex flex-column flex-grow-1'>
       {

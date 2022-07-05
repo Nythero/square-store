@@ -14,7 +14,6 @@ const Prendas = ({ content }) => {
   const nombreQuery = searchParams.has('nombre')?
     searchParams.get('nombre') :
     ''
-  console.log(nombreQuery)
   return (
     <section className='row g-0'>
       {

@@ -32,7 +32,6 @@ const handleFirstMessage = ws => event => {
 
 const handleConnection = (ws) => {
   console.log('An user connected')
-
   ws.addEventListener('message', handleFirstMessage(ws), { once: true })
   ws.on('close', () => console.log('An User Disconnected'))
 }

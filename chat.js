@@ -32,7 +32,6 @@ const map = (object, mapFunction) => {
 const addSupport = (ws) => {
   avaliableSupports.push(ws)
   const openRoomsDTO = map(openRooms, r => roomDTO(r))
-  console.log(openRoomsDTO)
   const message = { type: 'avaliable-rooms', payload: openRoomsDTO }
   ws.send(JSON.stringify(message))
 }

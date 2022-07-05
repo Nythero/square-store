@@ -24,7 +24,7 @@ const addMessageSupport = (chat, payload) => {
   const { id } = payload
   const message = {
     message: payload.message,
-    type: payload.type
+    sender: payload.sender
   }
   const takenRooms = addMessageSupportTakenRooms(chat.takenRooms, message, id)
   return objectWith(chat, { takenRooms })
@@ -154,12 +154,13 @@ const stateReducer = (state, action) => {
       const newChat = objectWith(chat, { openRooms })
       return objectWith(state, { chat: newChat })
     }
-    case('send-chat-message'): {
-      const message = action.payload
-      const chat = addMessage(state.user, state.chat, message)
-      return objectWith(state, { chat })
+    case('set-taken-rooms'): {
+      const takenRooms = action.payload
+      const chat = state.chat
+      const newChat = objectWith(chat, { takenRooms })
+      return objectWith(state, { chat: newChat })
     }
-    case('receive-chat-message'): {
+    case('add-chat-message'): {
       const message = action.payload
       const chat = addMessage(state.user, state.chat, message)
       return objectWith(state, { chat })

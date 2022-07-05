@@ -25,7 +25,7 @@ const ClientChat = () => {
   
   const sendMessage = (message) => {
     clientWebsocket.sendMessage(message)
-    dispatch({ type: 'send-chat-message', payload: { message, type: 'sended' } })
+    dispatch({ type: 'add-chat-message', payload: { message, sender: 'client' } })
   }
 
   switch(state) {

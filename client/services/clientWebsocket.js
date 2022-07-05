@@ -6,8 +6,7 @@ const handleMessage = dispatch => event => {
   const parsedData = JSON.parse(data)
   switch(parsedData.type) {
     case 'message': 
-      const payload = objectWith(parsedData.payload, { type: 'received' })
-      dispatch({ type: 'receive-chat-message', payload })
+      dispatch({ type: 'add-chat-message', payload: parsedData.payload })
     default:
       break
   }
@@ -31,7 +30,7 @@ const connect = (dispatch, setChat) => {
 }
 
 const sendMessage = message => {
-  const msg = { type: 'message', payload: message }
+  const msg = { type: 'message', payload: { message, sender: 'client' } }
   websocket.send(msg)
 }
 

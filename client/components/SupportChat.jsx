@@ -26,10 +26,10 @@ const SupportChat = () => {
     supportWebsocket.sendMessage(message, id)
     const payload = {
       message,
-      type: 'sended',
+      sender: 'support',
       id
     }
-    dispatch({ type: 'send-chat-message', payload })
+    dispatch({ type: 'add-chat-message', payload })
   }
 
   if(chat) {

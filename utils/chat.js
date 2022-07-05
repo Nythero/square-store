@@ -11,6 +11,8 @@ const avaliableSupports = []
 
 const openRooms = {}
 
+const takenRooms = {}
+
 const closedRooms = {}
 
 const roomDTO = room => ({
@@ -31,9 +33,11 @@ const map = (object, mapFunction) => {
 
 const addSupport = (ws) => {
   avaliableSupports.push(ws)
-  const openRoomsDTO = map(openRooms, r => roomDTO(r))
-  const message = { type: 'avaliable-rooms', payload: openRoomsDTO }
-  ws.send(JSON.stringify(message))
+  const roomsDTO = rooms => map(rooms, r => roomDTO(r))
+  const message1 = { type: 'avaliable-rooms', payload: roomsDTO(openRooms) }
+  const message2 = { type: 'taken-rooms', payload: roomsDTO(takenRooms) }
+  ws.send(JSON.stringify(message1))
+  ws.send(JSON.stringify(message2))
 }
 
 const notifyNewOpenRoom = (ws, newRoom) => {
@@ -48,24 +52,23 @@ const addClient = (ws) => {
 }
 
 const clientMessage = (message, room) => {
-  const payload = {
-    message: message.payload,
-    id: room.id
-  }
-  return {
-    type: message.type,
-    payload
-  }
+  const objectWith = require('./objectWith.js')
+  const payload = objectWith(message.payload, { id: room.id })
+  return objectWith(message, { payload })
 }
 
 const sendMessage = (ws, message, room) => {
   if(room.consultant === ws && room.support) {
     const msg = JSON.stringify(clientMessage(message, room))
+    console.log(msg)
     room.support.send(msg)
+    room.history.push({ message: msg, sender: 'client' })
   }
   else if (room.support === ws && room.consultant) {
     const msg = JSON.stringify(message)
+    console.log(msg)
     room.consultant.send(msg)
+    room.history.push({ message: msg, sender: 'support' })
   }
   else
     console.log('The room is not full')
@@ -78,20 +81,42 @@ const find = (object, findFunction) => {
   return values.find(findFunction)
 }
 
+const takeOpenRoom = (room, ws) => {
+  room.support = ws
+  delete openRooms[room.id]
+  takenRooms[room.id] = room
+}
+
+const roomOf = (ws, message) => {
+  const userType = message.payload.sender
+  switch(userType) {
+    case 'client':
+      return find(takenRooms, isMember(ws))
+    case 'support':
+      const id = message.payload.id
+      return takenRooms[id]
+    default:
+      return null
+  }
+}
+
 const handleMessage = (ws, msg) => {
   const parsedMessage = JSON.parse(msg)
+  console.log(parsedMessage)
   switch(parsedMessage.type) {
     case 'join-room':
       if(avaliableSupports.find(s => s === ws)) {
-	const id = parsedMessage.payload
-        const room = openRooms[id]
-	room.support = ws
+        const id = parsedMessage.payload
+        const room = find(openRooms, r => r.id === id)
+        takeOpenRoom(room, ws)
 	const message = { type:'support-agent-connected' }
 	room.consultant.send(JSON.stringify(message))
       }
+      break
     case 'message':
-      const room = find(openRooms, isMember(ws))
+      const room = roomOf(ws, parsedMessage)
       sendMessage(ws, parsedMessage, room)
+      break
     default:
       break
   }

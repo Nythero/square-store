@@ -4,16 +4,19 @@ const objectWith = require('../utils/objectWith.js')
 const handleMessage = dispatch => event => {
     const data = event.data
     const parsedData = JSON.parse(data)
+    console.log(parsedData)
     switch(parsedData.type) {
       case 'avaliable-rooms':
 	dispatch({ type: 'set-open-rooms', payload: parsedData.payload })
+	break
+      case 'taken-rooms':
+        dispatch({ type: 'set-taken-rooms', payload: parsedData.payload })
 	break
       case 'new-open-room':
 	dispatch({ type: 'add-open-room', payload: parsedData.payload })
 	break
       case 'message':
-        const payload = objectWith(parsedData.payload, { type: 'received' })
-        dispatch({ type: 'receive-chat-message', payload })
+        dispatch({ type: 'add-chat-message', payload: parsedData.payload })
 	break
       default:
 	console.log(data)
@@ -27,7 +30,8 @@ const connect = (user, dispatch) => {
 }
 
 const sendMessage = (message, id) => {
-  const msg = { type: 'message', payload: { id, message } }
+  const sender = 'support'
+  const msg = { type: 'message', payload: { id, message, sender } }
   websocket.send(msg)
 }
 

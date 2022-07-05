@@ -37,9 +37,15 @@ const addSupport = (ws) => {
   ws.send(JSON.stringify(message))
 }
 
+const notifyNewOpenRoom = (ws, newRoom) => {
+  const message = { type: 'new-open-room', payload: roomDTO(newRoom) }
+  avaliableSupports.forEach(s => s.send(JSON.stringify(message)))
+}
+
 const addClient = (ws) => {
   const newRoom = room(ws)
   openRooms[newRoom.id] = newRoom
+  notifyNewOpenRoom(ws, newRoom)
 }
 
 const clientMessage = (message, room) => {

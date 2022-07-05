@@ -15,7 +15,6 @@ const SupportChatListOpen = () => {
   const handleClick = (id) => () => {
     websocket.joinRoom(id)
     dispatch({ type: 'take-open-room', payload: id })
-    dispatch({ type: 'set-actual-chat-room', payload: id})
     dispatch({ type: 'toggle-chat-visible-rooms' })
   }
 

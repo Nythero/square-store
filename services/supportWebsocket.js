@@ -7,10 +7,11 @@ const handleMessage = dispatch => event => {
     console.log(parsedData)
     switch(parsedData.type) {
       case 'avaliable-rooms':
-	dispatch({ type: 'set-avaliable-rooms', payload: parsedData.payload })
+	dispatch({ type: 'set-open-rooms', payload: parsedData.payload })
 	break
-      case 'new-avaliable-room':
-	dispatch({ type: 'add-avaliable-room', payload: parsedData.payload })
+      case 'new-open-room':
+	dispatch({ type: 'add-open-room', payload: parsedData.payload })
+	break
       case 'message':
         const payload = objectWith(parsedData.payload, { type: 'received' })
         dispatch({ type: 'receive-chat-message', payload })

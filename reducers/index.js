@@ -57,13 +57,23 @@ const filterMap = (map, mapFunction) => {
   return Object.fromEntries(filteredEntries)
 }
 
+const addRoom = (rooms, room) => {
+  const aux = {}
+  aux[room.id] = room
+  return objectWith(rooms, aux)
+}
+
 const takeOpenRoom = (chat, id) => {
   const room = chat.openRooms[id]
   const openRooms = filterMap(chat.openRooms, r => r.id !== id)
-  const aux = {}
-  aux[id] = room
-  const takenRooms = objectWith(chat.takenRooms, aux)
+  const takenRooms = addRoom(chat.takenRooms, room)
   return objectWith(chat, { openRooms, takenRooms })
+}
+
+const addOpenRoom = (chat, room) => {
+  const openRooms = chat.openRooms
+  const newOpenRooms = addRoom(openRooms, room)
+  return objectWith(chat, { openRooms: newOpenRooms })
 }
 
 const stateReducer = (state, action) => {
@@ -138,7 +148,7 @@ const stateReducer = (state, action) => {
       }
       return objectWith(state, { chat })
     }
-    case('set-avaliable-rooms'): {
+    case('set-open-rooms'): {
       const openRooms = action.payload
       const chat = state.chat
       const newChat = objectWith(chat, { openRooms })
@@ -167,6 +177,11 @@ const stateReducer = (state, action) => {
     case('take-open-room'): {
       const id = action.payload
       const chat = takeOpenRoom(state.chat, id)
+      return objectWith(state, { chat })
+    }
+    case('add-open-room'): {
+      const room = action.payload
+      const chat = addOpenRoom(state.chat, room)
       return objectWith(state, { chat })
     }
     default:

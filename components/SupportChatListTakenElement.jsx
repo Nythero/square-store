@@ -7,6 +7,8 @@ const lastHistoryMessage = history => {
   return history[lastIndex]
 }
 
+const liClassName = 'list-group-item d-flex justify-content-around align-items-center border-0 border-top py-3'
+
 const lastMessage = room => lastHistoryMessage(room.history)
 
 const style = {
@@ -18,9 +20,8 @@ const SupportChatListTakenElement = ({ room }) => {
   const handleClick = () => {
     dispatch({ type: 'set-actual-chat-room', payload: room.id })
   }
-  console.log(room)
   return (
-    <li style={style} onClick={handleClick}>
+    <li className={liClassName} style={style} onClick={handleClick}>
       {lastMessage(room) || 'Puedes comunicarte con el cliente'}
     </li>
   )

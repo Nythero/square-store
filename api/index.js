@@ -7,8 +7,7 @@ const usersData = require('./usersData.json')
 
 api.use(express.json())
 
-api.post('/login', async (req, res, next) => {
-const squareData = require('./squareData.json')
+api.post('/login', async (req, res) => {
   const { username, password } = req.body
 
   const user = usersData.find(u => u.username === username)

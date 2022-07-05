@@ -1,14 +1,11 @@
 const websocket = require('./websocket.js')
-const objectWith = require('../utils/objectWith.js')
 
 const handleMessage = dispatch => event => {
   const data = event.data
   const parsedData = JSON.parse(data)
   switch(parsedData.type) {
-    case 'message': 
+    case 'message':
       dispatch({ type: 'add-chat-message', payload: parsedData.payload })
-    default:
-      break
   }
 }
 

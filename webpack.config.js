@@ -23,7 +23,7 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           plugins: ['@babel/plugin-syntax-object-rest-spread']
-	}
+        }
       }
     ]
   }

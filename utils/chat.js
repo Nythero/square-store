@@ -13,8 +13,6 @@ const openRooms = {}
 
 const takenRooms = {}
 
-const closedRooms = {}
-
 const roomDTO = room => ({
   id: room.id,
   history: room.history
@@ -88,34 +86,40 @@ const takeOpenRoom = (room, ws) => {
 const roomOf = (ws, message) => {
   const userType = message.payload.sender
   switch(userType) {
-    case 'client':
+    case 'client': {
       return find(takenRooms, isMember(ws))
-    case 'support':
+    }
+    case 'support': {
       const id = message.payload.id
       return takenRooms[id]
-    default:
+    }
+    default: {
       return null
+    }
   }
 }
 
 const handleMessage = (ws, msg) => {
   const parsedMessage = JSON.parse(msg)
   switch(parsedMessage.type) {
-    case 'join-room':
+    case 'join-room': {
       if(avaliableSupports.find(s => s === ws)) {
         const id = parsedMessage.payload
         const room = find(openRooms, r => r.id === id)
         takeOpenRoom(room, ws)
-	const message = { type:'support-agent-connected' }
-	room.consultant.send(JSON.stringify(message))
+        const message = { type:'support-agent-connected' }
+        room.consultant.send(JSON.stringify(message))
       }
       break
-    case 'message':
+    }
+    case 'message': {
       const room = roomOf(ws, parsedMessage)
       sendMessage(ws, parsedMessage, room)
       break
-    default:
+    }
+    default: {
       break
+    }
   }
 }
 

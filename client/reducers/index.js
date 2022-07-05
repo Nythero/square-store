@@ -34,10 +34,8 @@ const addMessage = (user, chat, payload) => {
   switch(userType(user)) {
     case 'support':
       return addMessageSupport(chat, payload)
-      break
     case 'client':
       return addMessageClient(chat, payload)
-      break
     default:
       break
   }
@@ -82,10 +80,10 @@ const stateReducer = (state, action) => {
       const carrito = state.carrito
       const prenda = action.payload
       const newCarrito = (carrito.some(p => p.id === prenda.id))?
-        carrito.map(p => (p.id === prenda.id)? 
-	  objectWith(prenda, { cantidad: p.cantidad + 1 }) :
-	  p
-	) :
+        carrito.map(p => (p.id === prenda.id)?
+          objectWith(prenda, { cantidad: p.cantidad + 1 }) :
+          p
+        ) :
         carrito.concat(objectWith(prenda, { cantidad: 1 }))
       return objectWith(state, { carrito: newCarrito })
     }
@@ -98,9 +96,9 @@ const stateReducer = (state, action) => {
     case('increase-quantity'): {
       const carrito = state.carrito
       const id = action.payload
-      const newCarrito = carrito.map(p => (p.id === id)? 
-	objectWith(p, { cantidad: p.cantidad + 1 }) :
-	p
+      const newCarrito = carrito.map(p => (p.id === id)?
+        objectWith(p, { cantidad: p.cantidad + 1 }) :
+        p
       )
       return objectWith(state, { carrito: newCarrito })
     }
@@ -111,9 +109,9 @@ const stateReducer = (state, action) => {
     case('decrease-quantity'): {
       const carrito = state.carrito
       const id = action.payload
-      const newCarrito = carrito.map(p => (p.id === id && p.cantidad > 1)? 
-	objectWith(p, { cantidad: p.cantidad - 1 }) :
-	p
+      const newCarrito = carrito.map(p => (p.id === id && p.cantidad > 1)?
+        objectWith(p, { cantidad: p.cantidad - 1 }) :
+        p
       )
       return objectWith(state, { carrito: newCarrito })
     }
@@ -138,12 +136,12 @@ const stateReducer = (state, action) => {
       return objectWith(state, { chat })
     }
     case('connect-chat-support'): {
-      const [OPEN, TAKEN] = [true, false]
-      const chat = { 
-	openRooms: {},
-	takenRooms: {},
-	actual: null,
-	visibleRooms: OPEN
+      const OPEN= true
+      const chat = {
+        openRooms: {},
+        takenRooms: {},
+        actual: null,
+        visibleRooms: OPEN
       }
       return objectWith(state, { chat })
     }

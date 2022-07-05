@@ -1,5 +1,4 @@
 const WebSocket = require('ws')
-const usersData = require('../api/usersData.json')
 const chat = require('./chat.js')
 
 let webSocketServer

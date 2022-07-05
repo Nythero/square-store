@@ -4,7 +4,6 @@ const objectWith = require('../utils/objectWith.js')
 const handleMessage = dispatch => event => {
     const data = event.data
     const parsedData = JSON.parse(data)
-    console.log(parsedData)
     switch(parsedData.type) {
       case 'avaliable-rooms':
 	dispatch({ type: 'set-open-rooms', payload: parsedData.payload })

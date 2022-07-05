@@ -60,13 +60,11 @@ const clientMessage = (message, room) => {
 const sendMessage = (ws, message, room) => {
   if(room.consultant === ws && room.support) {
     const msg = JSON.stringify(clientMessage(message, room))
-    console.log(msg)
     room.support.send(msg)
     room.history.push({ message: msg, sender: 'client' })
   }
   else if (room.support === ws && room.consultant) {
     const msg = JSON.stringify(message)
-    console.log(msg)
     room.consultant.send(msg)
     room.history.push({ message: msg, sender: 'support' })
   }
@@ -102,7 +100,6 @@ const roomOf = (ws, message) => {
 
 const handleMessage = (ws, msg) => {
   const parsedMessage = JSON.parse(msg)
-  console.log(parsedMessage)
   switch(parsedMessage.type) {
     case 'join-room':
       if(avaliableSupports.find(s => s === ws)) {

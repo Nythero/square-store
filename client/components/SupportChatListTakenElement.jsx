@@ -18,7 +18,6 @@ const style = {
 }
 
 const SupportChatListTakenElement = ({ room }) => {
-  console.log(room)
   const dispatch = useContext(DispatchContext)
   const handleClick = () => {
     dispatch({ type: 'set-actual-chat-room', payload: room.id })

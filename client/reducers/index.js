@@ -77,7 +77,6 @@ const addOpenRoom = (chat, room) => {
 }
 
 const stateReducer = (state, action) => {
-  console.log(state, action)
   switch(action.type) {
     case('add-to-cart'): {
       const carrito = state.carrito

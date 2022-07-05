@@ -9,7 +9,6 @@ const chatStyle = {
 }
 
 const Chat = ({ sendMessage, chat }) => {
-  console.log(chat)
   if(chat)
     return (
       <div 

@@ -26,7 +26,7 @@ const App = (props) => {
     null
   const [state, dispatch] = useReducer(stateReducer, initialState)
   return (
-    <html style={{ overflowY: 'scroll' }}>
+    <html style={{ overflowY: 'scroll' }} lang='es'>
       <head>
         <title>Prendas Store</title>
         <link
@@ -35,6 +35,8 @@ const App = (props) => {
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossOrigin="anonymous"
         />
+        <meta name="viewport" content="width=device-width, intial-scale=1" />
+        <meta name="description" content="Una tienda de cuadrados" />
       </head>
       <body className='container'>
         <StateContext.Provider value={state}>
@@ -58,7 +60,7 @@ const App = (props) => {
         <script dangerouslySetInnerHTML={{
 	  __html: 'window.PROPS=' + JSON.stringify(props)
 	}}/>
-        <script src='/public/bundle.js' />
+        <script src='/bundle.js' />
       </body>
     </html>
   )

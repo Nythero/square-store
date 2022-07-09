@@ -15,10 +15,12 @@ const site = (location, props) => {
   )
 }
 
+const appendDoctype = html => `<!DOCTYPE html>${html}`
+
 Router.get('*', (req, res) => {
   const content = { content: prendas }
   const html = ReactDOMServer.renderToString(site(req.url, content))
-  res.send(html)
+  res.send(appendDoctype(html))
 })
 
 module.exports = Router

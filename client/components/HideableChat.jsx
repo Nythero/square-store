@@ -22,7 +22,7 @@ const HideableChat = () => {
     <div className='fixed-bottom d-flex flex-column' style={style(isHidden)}>
     {
       isHidden? 
-        <button className='btn btn-outline-dark mt-auto' onClick={handleClick}>
+        <button className='btn btn-outline-light bg-dark text-white mt-auto' onClick={handleClick}>
           Chat
         </button> :
         <React.Fragment>

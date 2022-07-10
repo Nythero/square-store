@@ -3,9 +3,10 @@ require('babel-register')({
 })
 const http = require('http')
 const app = require('./app.js')
+const { PORT } = require('./utils/config.js')
 
 const server = http.createServer(app)
 
 require('./utils/websocket.js').create(server)
 
-server.listen(3000, console.log('Listening at http://localhost:3000'))
+server.listen(PORT, console.log(`Listening at http://localhost:${PORT}`))

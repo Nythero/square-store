@@ -5,8 +5,10 @@ const { BrowserRouter } = require('react-router-dom')
 
 const props = window.PROPS
 
+if(true) {
 ReactDOM.hydrateRoot(document, 
   <BrowserRouter>
     <App {...props} />
   </BrowserRouter>
 )
+}

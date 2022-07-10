@@ -9,8 +9,9 @@ const sendAuthentification = (user, handleMessage, options) => (event) => {
 const connect = (user, handleMessage, options = {}) => {
   if(ws)
     return
-  ws = new WebSocket(`ws://${location.hostname}:3000`)
+  ws = new WebSocket(`wss://${location.hostname}`)
   ws.addEventListener('open', sendAuthentification(user, handleMessage, options))
+  ws.addEventListener('error', (err) => console.log(err))
 }
 
 const close = () => {

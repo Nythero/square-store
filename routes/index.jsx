@@ -18,7 +18,7 @@ const site = (location, props) => {
 const appendDoctype = html => `<!DOCTYPE html>${html}`
 
 Router.get('*', (req, res) => {
-  const content = { content: prendas }
+  const content = { content: prendas, nonce: req.nonce }
   const html = ReactDOMServer.renderToString(site(req.url, content))
   res.send(appendDoctype(html))
 })

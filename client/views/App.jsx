@@ -10,13 +10,14 @@ const Prenda = require('./Prenda.jsx')
 const Dashboard = require('./Dashboard.jsx')
 const Footer = require('../components/Footer.jsx')
 const HideableChat = require('../components/HideableChat.jsx')
-const { useReducer } = React
+const { useReducer, useEffect } = React
 const {
   DispatchContext,
   StateContext
 } = require('./Contexts.js')
 const Alert = require('../components/Alert.jsx')
 const { stateReducer, initialState } = require('../reducers')
+const PropsScript = require('../components/PropsScript.jsx')
 
 const App = (props) => {
   const match = useMatch('/prendas/:id')
@@ -57,9 +58,7 @@ const App = (props) => {
         <Footer />
           </DispatchContext.Provider>
         </StateContext.Provider>
-        <script dangerouslySetInnerHTML={{
-	  __html: 'window.PROPS=' + JSON.stringify(props)
-	}}/>
+        <PropsScript {...props} />
         <script src='/bundle.js' />
       </body>
     </html>

@@ -6,10 +6,12 @@ const sendAuthentification = (user, handleMessage, options) => (event) => {
   event.target.addEventListener('message', handleMessage, options)
 }
 
+const protocol = () => (location.protocol === 'https:')? 'wss' : 'ws'
+
 const connect = (user, handleMessage, options = {}) => {
   if(ws)
     return
-  ws = new WebSocket(`wss://${location.hostname}`)
+  ws = new WebSocket(`${protocol()}://${location.hostname}:${location.port}`)
   ws.addEventListener('open', sendAuthentification(user, handleMessage, options))
   ws.addEventListener('error', (err) => console.log(err))
 }
